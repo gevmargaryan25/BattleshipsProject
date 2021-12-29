@@ -23,6 +23,31 @@ namespace Battleships.Models
                 OnPropertyChanged("IsHit");
             }
         }
+
+        private string _text;
+        public string Text
+        {
+            get { return _text; }
+            set 
+            { 
+                _text = value;
+                OnPropertyChanged("Text");
+            }
+        }
+
+
+        private string _placeHolderText;
+        public string PlaceHolderText
+        {
+            get => _placeHolderText;
+            set
+            {
+                _placeHolderText = value;
+                OnPropertyChanged("PlaceHolderText");
+            }
+        }
+
+
         public bool IsDummy { get; set; }
         public int PieceOrderNumber { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;

@@ -8,48 +8,70 @@
     xmlns:models="using:Battleships.Models"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
-    <Grid>
+    <Grid Background="#4b88eb">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-            <ColumnDefinition />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <Grid
-            Width="900"
-            Height="400"
-            Grid.Column="0"
-            Background="Yellow">
-            <ListView x:Name="Player"
-                      HorizontalAlignment="Stretch"
-                      HorizontalContentAlignment="Stretch"
-                      ItemsSource="{x:Bind ViewModel.Array, Mode=OneWay}">
-                <Style TargetType="ListViewItem">
-                    <Setter Property="Height" Value="20" />
-                    <Setter Property="MinHeight" Value="20" />
-                </Style>
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsWrapGrid   MaximumRowsOrColumns="10"   Orientation="Horizontal"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Position">
-                        <Grid Width="40" Height="20">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{x:Bind Row}" />
-                            <TextBlock Grid.Column="1" Text="{x:Bind Column}" />
-                        </Grid>
+
+        <Image VerticalAlignment="Top" Source="Assets/BattleShipsImg.jpg" Grid.ColumnSpan="2"/>
+
+        <Button HorizontalAlignment="Center" Visibility="{x:Bind ViewModel.ButtonsVisibility, Mode=OneWay}" 
+                VerticalAlignment="Center" Content="Ready to start" Width="200" Height="80" FontSize="24"  
+                CornerRadius="3"  Background="#6a6273" Foreground="White" Click="ReadyToStart_Click"/>
+
+        <StackPanel x:Name="stack" Grid.Column="0" Orientation="Vertical" Spacing="20" Visibility="{x:Bind ViewModel.BoardVisibility, Mode=OneWay}">
+
+            <TextBlock Foreground="White" FontSize="24" Text="Enemy ships" HorizontalAlignment="Center"/>
+
+            <GridView x:Name="gridview" Opacity="0.8"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Width="550" Height="600" ItemsSource="{x:Bind ViewModel.Comp, Mode=OneWay}">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="GridView">
+                        <GridView x:Name="gr" ItemsSource="{Binding}" Width="550" Height="55" IsItemClickEnabled="True" ItemClick="GridView_ItemClick">
+
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Position">
+                                    <Grid  Width="50" Background="Azure" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                        <TextBlock  FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="{Binding PlaceHolderText, Mode=OneWay}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
-        <Grid
-            Width="900"
-            Height="400"
-            Grid.Column="1"
-            Background="Green">
-        </Grid>
+                </GridView.ItemTemplate>
+            </GridView>
+
+        </StackPanel>
+
+        <Button Grid.Column="1" Margin="-20" Width="60" HorizontalAlignment="Left" Height="40" Click="ChangeBoard_Click" Visibility="{x:Bind ViewModel.ButtonsVisibility, Mode=OneWay}" Background="#6a6273" CornerRadius="3">
+            <SymbolIcon Symbol="Sync" Foreground="White"/>
+        </Button>
+
+        <StackPanel Grid.Column="1" Spacing="20">
+            
+            <TextBlock HorizontalAlignment="Center" Foreground="White" Text="Your ships" FontSize="24"/>
+
+            <GridView Opacity="0.8" IsItemClickEnabled="False" SelectionMode="None" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"  Width="550" Height="600" ItemsSource="{x:Bind ViewModel.User, Mode=OneWay}">
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="GridView">
+                        <GridView x:Name="gr" ItemsSource="{Binding}" SelectionMode="None" IsItemClickEnabled="False" Width="550" Height="55">
+
+                            <GridView.ItemTemplate>
+                                <DataTemplate x:DataType="models:Position">
+                                    <Grid  Width="50" Background="Azure" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" >
+                                        <TextBlock  FontSize="50" HorizontalAlignment="Center" VerticalAlignment="Center"  Text="{Binding Text, Mode=TwoWay}"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridView.ItemTemplate>
+                        </GridView>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+
+            
+            
+            
+        </StackPanel>
+
     </Grid>
 </Page>

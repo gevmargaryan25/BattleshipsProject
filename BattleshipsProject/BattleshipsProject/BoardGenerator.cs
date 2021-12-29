@@ -8,11 +8,21 @@ namespace Battleships
 {
     public class BoardGenerator
     {
-        public Position[,] Generate(int rank)
+        public List<List<Position>> Generate(int rank)
         {
             var board = new Position[rank, rank];
             GenerateMatrix(board);
-            return board;
+            List<List<Position>> result = new List<List<Position>>();
+            for (int i = 0; i < 10; ++i)
+            {
+                List<Position> temp = new List<Position>();
+                for (int j = 0; j < 10; ++j)
+                {
+                    temp.Add(board[i, j]);
+                }
+                result.Add(temp);
+            }
+            return result;
         }
         //private static void DisplayMatrix(int[,] matrix)
         //{
@@ -38,6 +48,15 @@ namespace Battleships
             Generate1(matrix);
             Generate1(matrix);
             Generate1(matrix);
+            for (int i = 0; i < 10; ++i)
+            {
+                for (int j = 0; j < 10; ++j)
+                {
+                    if (matrix[i, j] == null)
+                        matrix[i, j] = new Position { PlaceHolderText = "", Text="" };
+
+                }
+            }
         }
         private static void Generate4(Position[,] matrix)
         {
@@ -55,7 +74,9 @@ namespace Battleships
                         Column = start + i,
                         ShipType = 4,
                         Direction = direction,
-                        PieceOrderNumber = i + 1
+                        PieceOrderNumber = i + 1,
+                        PlaceHolderText = "",
+                        Text="4"
                     };
                 }
             }
@@ -69,7 +90,9 @@ namespace Battleships
                         Column = position,
                         ShipType = 4,
                         Direction = direction,
-                        PieceOrderNumber = i + 1
+                        PieceOrderNumber = i + 1,
+                        PlaceHolderText = "",
+                        Text="4"
                     };
                 }
             }
@@ -94,11 +117,11 @@ namespace Battleships
                     if (i == 3)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 1, PlaceHolderText = "", Text="3" };
                         matrix[row, column + 1] = new Position
-                        { Row = row, Column = column + 1, ShipType = 3, Direction = direction, PieceOrderNumber = 2 };
+                        { Row = row, Column = column + 1, ShipType = 3, Direction = direction, PieceOrderNumber = 2, PlaceHolderText = "", Text = "3" };
                         matrix[row, column + 2] = new Position
-                        { Row = row, Column = column + 2, ShipType = 3, Direction = direction, PieceOrderNumber = 3 };
+                        { Row = row, Column = column + 2, ShipType = 3, Direction = direction, PieceOrderNumber = 3, PlaceHolderText = "", Text = "3" };
                         break;
                     }
                 }
@@ -116,11 +139,11 @@ namespace Battleships
                     if (i == 3)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 1, PlaceHolderText = "", Text = "3" };
                         matrix[row + 1, column] = new Position
-                        { Row = row + 1, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 2 };
+                        { Row = row + 1, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 2, PlaceHolderText = "", Text = "3" };
                         matrix[row + 2, column] = new Position
-                        { Row = row + 2, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 3 };
+                        { Row = row + 2, Column = column, ShipType = 3, Direction = direction, PieceOrderNumber = 3, PlaceHolderText = "", Text = "3" };
                         break;
                     }
                 }
@@ -146,9 +169,9 @@ namespace Battleships
                     if (i == 2)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 1, PlaceHolderText = "", Text="2" };
                         matrix[row, column + 1] = new Position
-                        { Row = row, Column = column + 1, ShipType = 2, Direction = direction, PieceOrderNumber = 2 };
+                        { Row = row, Column = column + 1, ShipType = 2, Direction = direction, PieceOrderNumber = 2, PlaceHolderText = "", Text="2" };
                         break;
                     }
                 }
@@ -166,9 +189,9 @@ namespace Battleships
                     if (i == 2)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 1, PlaceHolderText = "", Text = "2" };
                         matrix[row + 1, column] = new Position
-                        { Row = row + 1, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 2 };
+                        { Row = row + 1, Column = column, ShipType = 2, Direction = direction, PieceOrderNumber = 2, PlaceHolderText = "", Text = "2" };
                         break;
                     }
                 }
@@ -194,7 +217,7 @@ namespace Battleships
                     if (i == 1)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 1, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 1, Direction = direction, PieceOrderNumber = 1, PlaceHolderText="", Text="1" };
                         break;
                     }
                 }
@@ -212,7 +235,7 @@ namespace Battleships
                     if (i == 1)
                     {
                         matrix[row, column] = new Position
-                        { Row = row, Column = column, ShipType = 1, Direction = direction, PieceOrderNumber = 1 };
+                        { Row = row, Column = column, ShipType = 1, Direction = direction, PieceOrderNumber = 1, PlaceHolderText = "", Text="1" };
                         break;
                     }
                 }
@@ -234,15 +257,15 @@ namespace Battleships
         public static int Hit(List<List<Position>> board, int row, int column)
         {
             var currentCell = board[row][column];
-            if (currentCell == null)
+            if (currentCell.ShipType == 0)
             {
-                board[row][column] = new Position { IsDummy = true };
+                board[row][column].IsDummy = true;
                 return 0;
             }
             if (currentCell.IsDummy) return 0;
             currentCell.IsHit = true;
             // check for match end
-            if (board.SelectMany(x => x).Count(x => x != null && x.IsHit) == 20) return 3;
+            if (board.SelectMany(x => x).Count(x => x.ShipType != 0 && x.IsHit) == 20) return 3;
             //check ship destroy
             var direction = currentCell.Direction;
             switch (direction)
